@@ -19,6 +19,7 @@ export default class SearchableDropDown extends Component {
     this.renderFlatList = this.renderFlatList.bind(this);
     this.searchedItems = this.searchedItems.bind(this);
     this.renderItems = this.renderItems.bind(this);
+    this.config=this.props?.config || {id:'id',name:'name'}
     this.state = {
       item: {},
       listItems: [],
@@ -93,11 +94,11 @@ export default class SearchableDropDown extends Component {
   renderItems = (item, index) => {
     if(this.props.multi && this.props.selectedItems && this.props.selectedItems.length > 0) {
       return (
-          this.props.selectedItems.find(sitem => sitem.id === item.id) 
+          this.props.selectedItems.find(sitem => sitem.id === item[this.config.id]) 
           ? 
           <TouchableOpacity style={{ ...this.props.itemStyle, flex: 1, flexDirection: 'row' }}>
             <View style={{ flex: 0.9, flexDirection: 'row', alignItems: 'flex-start' }}>
-              <Text>{ item.name }</Text>
+              <Text>{ item[this.config.name] }</Text>
             </View>
             <View style={{ flex: 0.1, flexDirection: 'row', alignItems: 'flex-end' }}>
               <TouchableOpacity onPress={() => setTimeout(() => { this.props.onRemoveItem(item, index) }, 0) } style={{ backgroundColor: '#f16d6b', alignItems: 'center', justifyContent: 'center', width: 25, height: 25, borderRadius: 100, marginLeft: 10}}>
@@ -115,7 +116,7 @@ export default class SearchableDropDown extends Component {
           }}
           style={{ ...this.props.itemStyle, flex: 1, flexDirection: 'row' }}>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start' }}>
-              <Text>{ item.name }</Text>
+              <Text>{ item[this.config.name] }</Text>
             </View>
           </TouchableOpacity>
       )
@@ -136,11 +137,11 @@ export default class SearchableDropDown extends Component {
           }}
         >
           { 
-            this.props.selectedItems && this.props.selectedItems.length > 0 && this.props.selectedItems.find(x => x.id === item.id) 
+            this.props.selectedItems && this.props.selectedItems.length > 0 && this.props.selectedItems.find(x => x.id === item[this.config.id]) 
             ?
-              <Text style={{ ...this.props.itemTextStyle }}>{item.name}</Text>
+              <Text style={{ ...this.props.itemTextStyle }}>{ item[this.config.name] }</Text>
             :
-              <Text style={{ ...this.props.itemTextStyle }}>{item.name}</Text>
+              <Text style={{ ...this.props.itemTextStyle }}>{ item[this.config.name] }</Text>
           }
         </TouchableOpacity>
       );
